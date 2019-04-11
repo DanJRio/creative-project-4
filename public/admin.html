@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+  <title>FaceSpace</title>
+</head>
+
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="/images/openbook_sw.png">
+    </div>
+    <div class="title">
+      <h1>FaceSpace</h1>
+      <h2>Your online Scrapbook!</h2>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">FS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="/index.html">Home </a>
+        <a class="nav-item nav-link active" href="/facespace.html">Your FaceSpace</a>
+        <a class="nav-item nav-link" href="/admin.html">Edit your FaceSpace <span class="sr-only">(current)</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <!--ADD-->
+  <div id="admin" class="content">
+    <div class="heading">
+      <div class="circle">+</div>
+      <h2>Add an Item</h2>
+    </div>
+
+    <div class="add">
+      <div class="form">
+        <input v-model="title" placeholder="Date">
+        <input v-model="description" placeholder="Description">
+        <star-rating v-model="rating"></star-rating>
+
+        <p></p>
+        <input type="file" name="photo" @change="fileChanged">
+        <button @click="upload">Upload</button>
+      </div>
+
+
+      <div class="upload" v-if="addItem">
+        <h2>{{addItem.title}}</h2>
+        <p>{{addItem.description}}</p>
+        <p>{{addItem.rating}}</p>
+
+        <img :src="addItem.path" />
+      </div>
+    </div>
+
+
+
+
+    <!--EDIT/DELETE-->
+    <div class="heading">
+      <div class="circle">?</div>
+      <h2>Edit/Delete an Item</h2>
+    </div>
+
+    <div class="edit">
+      <div class="form">
+        <input v-model="findTitle" placeholder="Search">
+        <div class="suggestions" v-if="suggestions.length > 0">
+          <div class="suggestion" v-for="s in suggestions" @click="selectItem(s)">{{s.title}}
+          </div>
+        </div>
+      </div>
+
+      <div class="upload" v-if="findItem">
+        <input v-model="findItem.title" placeholder="Date">
+        <input v-model="findItem.description" placeholder="Description">
+        <star-rating v-model="findItem.rating"></star-rating>
+        <!--
+            <star-rating @rating-selected="setRating"></star-rating>
+          -->
+
+        <p></p>
+        <img :src="findItem.path" />
+      </div>
+
+      <div class="actions" v-if="findItem">
+        <button @click="deleteItem(findItem)">Delete</button>
+        <button @click="editItem(findItem)">Edit</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <footer>
+    <a href="https://github.com/DanJRio/Portfolio">Buchanan's GitHub Repository</a>
+  </footer>
+
+  <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"
+    integrity="sha256-mpnrJ5DpEZZkwkE1ZgkEQQJW/46CSEh/STrZKOB/qoM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.7/vue.js"
+    integrity="sha256-g+Q8DFAmG5+eyRPSydX0LY4TfjsL11XSDrIGerbbEdA=" crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  <script src="/admin.js"></script>
+</body>
+
+</html>
